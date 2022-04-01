@@ -120,6 +120,50 @@ listar.addEventListener('click', e =>{
 })
 
 
+// EDITAR 
+const buttonEditar = document.getElementById("button-editar");
+buttonEditar.addEventListener("click", () => { 
+    // Capturando valor de los inputs
+    let nombre = document.getElementById('nombre').value
+    let apellido = document.getElementById('apellido').value
+    let correo = document.getElementById('correo').value
+    let fecha = document.getElementById('fecha').value
+    let hora = document.getElementById('hora').value
+    let observacion = document.getElementById('obser').value
+
+    let objId = JSON.parse(localStorage.getItem("objId"));
+    // console.log(objId)
+    const  LS =  JSON.parse(localStorage.getItem("Agenda"));
+    // console.log( LS)
+    let arrPosition = 0;
+    for(let i = 0; i < LS.length; i++) {
+        if(LS[i].id === objId.id) {
+            arrPosition = i;
+        }
+    }
+    const newObj = {
+        id: objId.id,
+        nombre,
+        apellido,
+        correo,
+        fecha,
+        hora,
+        observacion
+    }
+
+    LS.splice(arrPosition, 1, newObj);
+    // console.log(LS)
+    localStorage.setItem("Agenda", JSON.stringify(LS));
+    listarLocalStorage()
+
+})
+
+function animacionAviso(){
+    const avisoEditar = document.getElementById("aviso-editar");
+    avisoEditar.style.height = "50px";
+    avisoEditar.style.transition = "2s";
+    avisoEditar.innerHTML = "Ya puedes editar la informacion del formulario"
+}
 //--------BUSCAR------//
 let buscar = document.getElementById('search');
 buscar.addEventListener('keyup', (e) =>{
